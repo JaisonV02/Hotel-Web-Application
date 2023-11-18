@@ -1,0 +1,11 @@
+Twin1.png	- Morum Chania City Hotel
+Twin2.png	- Hotel7
+Twin3.png	- Imperial London Hotels
+
+Family1.png	- Limerick Strand Hotel
+Family2.png	- Green Isle Hotel
+Family3.png	- Killeshin Hotel
+
+Single1.png	- Frasers Hospitality
+Single2.png	- Academy Plaza Hotel
+Single3.png	- Metro Hotel Dublin
