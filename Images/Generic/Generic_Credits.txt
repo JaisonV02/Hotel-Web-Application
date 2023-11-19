@@ -1,2 +1,8 @@
 BalconyView1.png	- Kempinski Hotels
 BalconyView2.png	- Malibu Beach Inn via https://www.livelikeitstheweekend.com/california-coast-hotels/
+
+Pool1.png	- Hotel Monte Cristo Paris via https://thetourguy.com/travel-blog/best-hotels-in-paris-with-indoor-pools-for-this-year/
+Pool1.png	- Westport Plaza Hotel
+
+Bar1.png	- The Merchant Hotel
+Bar2.png	- The Empire Hotel New York
