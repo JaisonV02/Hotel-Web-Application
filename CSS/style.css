@@ -1,0 +1,9 @@
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    font-size: 24px;
+  }
+  .navbar-brand img {
+    height: 70px;
+    margin-right: 7px;
+  }
