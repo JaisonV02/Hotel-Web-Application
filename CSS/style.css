@@ -25,3 +25,10 @@
 
   height:20px;
 }
+
+/* https://www.w3schools.com/howto/howto_css_disable_text_selection.asp */
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
