@@ -4,3 +4,6 @@
 
 # Node modules
 Node/node_modules
+
+# .env files
+Node/.env

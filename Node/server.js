@@ -1,10 +1,25 @@
 // Import modules
+const dotenv = require('dotenv');
 const express = require('express');
 const path = require('path');
+const pg = require('pg');
 
 // Server port and host
 const port = 8080;
 const host = 'localhost';
+
+// Configure env
+dotenv.config();
+
+// Configure database connection
+const hotelDB = new pg.Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+});
+hotelDB.connect();
 
 // Create an Express app
 const app = express();
