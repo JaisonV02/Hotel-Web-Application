@@ -90,17 +90,21 @@ app.post('/register', async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 10);
 
     // Insert user into the database
-    const result = await hotelDB.query('insert into guest_account (email, first_name, last_name, password) values ($1, $2, $3, $4)', [email, firstName, lastName, hashPassword]);
+    var result = await hotelDB.query('insert into guest_account (email, first_name, last_name, password) values ($1, $2, $3, $4)', [email, firstName, lastName, hashPassword]);
 
     if (result.rowCount > 0) {
+        // Log the user in after registration
+        result = await hotelDB.query('select * from guest_account where email = $1', [email]);
+        const user = result.rows[0];
+
         req.session.user = {
             firstName: user.first_name,
             lastName: user.last_name,
             email: user.email
         };
 
-        // Redirect to homepage
         res.redirect('/');
+
     } else {
         res.send('Error registering user');
     }
@@ -132,11 +136,11 @@ app.post('/login', async (req, res) => {
             res.redirect('/');
         } else {
             // Password does not match
-            res.send('Invalid password');
+            res.redirect('/');
         }
     } else {
         // User does not exist
-        res.send('User does not exist');
+        res.redirect('/');
     }
 });
 
