@@ -34,12 +34,36 @@ hotelDB.connect((err, client, done) => {
 const app = express();
 
 // Serve static files
-app.use(express.static(path.join(__dirname, '../')));
+app.use(express.static(path.join(__dirname, '../CSS')));
+app.use(express.static(path.join(__dirname, '../Images')));
+app.use(express.static(path.join(__dirname, '../JS')));
 
 // Define the route for the home page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
 });
 
+// Define the route for the booking page
+app.get('/booking', (req, res) => {
+    res.sendFile(path.join(__dirname, '../booking.html'));
+});
+
+// Define the route for the about page
+app.get('/about', (req, res) => {
+    res.sendFile(path.join(__dirname, '../about.html'));
+});
+
+// Define the route for the contact page
+app.get('/contactus', (req, res) => {
+    res.sendFile(path.join(__dirname, '../contactus.html'));
+});
+
+// Define the route for the login page
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(__dirname, '../login.html'));
+});
+
 // Start the server
-app.listen(port, host, (req, res) => {console.log('App running on http://' + host + ':' + port + '/');});
+app.listen(port, host, (req, res) => {
+    console.log('App running on http://' + host + ':' + port + '/');
+});
