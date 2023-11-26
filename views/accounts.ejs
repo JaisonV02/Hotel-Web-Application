@@ -93,6 +93,72 @@ in our database -->
   </div>
 </div>
 
+<!-- Accounts management -->
+<section class="bg-body-tertiary container mt5">
+  <div class="row">
+
+    <!-- Update Form -->  
+    <div class="col-sm-5">
+      <!-- Change action to some update function -->
+        <form method="POST" action="/register">
+            <h1 class="h3 mb-3 fw-normal">Account Details</h1>
+
+            <div class="form-floating">
+                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="<%= req.session.user.email %>">
+                <label for="floatingInput">Email</label>
+            </div>
+
+            <!-- Adding little gap between each form to make it look nicer -->
+            <div class="mt-2 col-md-12">
+              <p class="prevent-select"></p>
+            </div>
+            <!-- End little gap -->
+
+            <div class="form-floating">
+                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" value="<%= req.session.user.firstName %>">
+                <label for="floatingInput">First Name</label>
+            </div>
+
+            <!-- Adding little gap between each form to make it look nicer -->
+            <div class="mt-2 col-md-12">
+              <p class="prevent-select"></p>
+            </div>
+            <!-- End little gap -->
+
+            <div class="form-floating">
+                <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name" value="<%= req.session.user.lastName %>">
+                <label for="floatingInput">Last Name</label>
+            </div>
+
+            <!-- Adding little gap between each form to make it look nicer -->
+            <div class="mt-2 col-md-12">
+              <p class="prevent-select"></p>
+            </div>
+            <!-- End little gap -->
+            
+            <!-- Not displaying current password in form for security reasons -->
+            <div class="form-floating">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <!-- Adding little gap between each form to make it look nicer -->
+            <div class="mt-2 col-md-12">
+              <p class="prevent-select"></p>
+            </div>
+            <!-- End little gap -->
+
+            <button class="btn btn-primary w-100 py-2" type="submit">Submit Changes</button>
+        </form>
+    </div>
+    <!-- End Update Form -->
+  </div> 
+
+  <!-- Delete account button - Link this to some delete js function -->
+  <!-- Also align this to the right and change to red -Work for Chris tmr-->
+  <button type="button" class="btn btn-sm btn-outline-secondary">Delete Account</button>
+</section>
+<!-- End Accounts management -->
 
 <!-- Footer -->
 <div class="mt-5 p-4 bg-primary text-white text-center">
