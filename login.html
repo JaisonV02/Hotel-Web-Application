@@ -89,22 +89,22 @@ below the signup form -->
     <div class="row">
         <!-- Register Form -->  
         <div class="col-sm-5">
-            <form>
+            <form method="POST" action="/register">
                 <h1 class="h3 mb-3 fw-normal">Register</h1>
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="firstName" placeholder="First name">
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name">
                     <label for="floatingInput">First name</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="lastName" placeholder="Last name">
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last name">
                     <label for="floatingInput">Last name</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     <label for="floatingPassword">Password</label>
                 </div>
                 <button class="btn btn-primary w-100 py-2" type="submit">Register</button>
@@ -114,14 +114,14 @@ below the signup form -->
 
         <!-- Login Form -->
         <div class="col-sm-5 ms-auto">
-            <form>
+            <form method="POST" action="/login">
                 <h1 class="h3 mb-3 fw-normal">Login</h1>
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
                     <label for="floatingInput">Email address</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     <label for="floatingPassword">Password</label>
                 </div>
                 <button class="btn btn-primary w-100 py-2" type="submit">Login</button> 

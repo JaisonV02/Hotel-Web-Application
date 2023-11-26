@@ -3,6 +3,9 @@ const dotenv = require('dotenv');
 const express = require('express');
 const path = require('path');
 const pg = require('pg');
+const session = require('express-session');
+const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 
 // Server port and host
 const port = 8080;
@@ -33,6 +36,18 @@ hotelDB.connect((err, client, done) => {
 // Create an Express app
 const app = express();
 
+// Set views engine and directory
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views'));
+
+// Configure sessions and body parser
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUnitialized: false
+}));
+
 // Serve static files
 app.use(express.static(path.join(__dirname, '../CSS')));
 app.use(express.static(path.join(__dirname, '../Images')));
@@ -40,7 +55,7 @@ app.use(express.static(path.join(__dirname, '../JS')));
 
 // Define the route for the home page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
+    res.render('index', {req: req});
 });
 
 // Define the route for the booking page
@@ -61,6 +76,64 @@ app.get('/contactus', (req, res) => {
 // Define the route for the login page
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '../login.html'));
+});
+
+// User registration, add data to the database
+app.post('/register', async (req, res) => {
+    const {email, firstName, lastName, password} = req.body;
+
+    // Hash the password
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    // Insert user into the database
+    const result = await hotelDB.query('insert into guest_account (email, first_name, last_name, password) values ($1, $2, $3, $4)', [email, firstName, lastName, hashPassword]);
+
+    if (result.rowCount > 0) {
+        req.session.user = {
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email
+        };
+
+        // Redirect to homepage
+        res.redirect('/');
+    } else {
+        res.send('Error registering user');
+    }
+});
+
+// User login
+app.post('/login', async (req, res) => {
+    const {email, password} = req.body;
+
+    // Query database
+    const result = await hotelDB.query('select * from guest_account where email = $1', [email]);
+
+    if(result.rowCount > 0) {
+        const user = result.rows[0];
+
+        // Compare hashed password
+        const match = await bcrypt.compare(password, user.password);
+
+        // Check is passwords match
+        if (match) {
+            // Create a session
+            req.session.user = {
+                firstName: user.first_name,
+                lastName: user.last_name,
+                email: user.email
+            };
+
+            // Redirect to homepage
+            res.redirect('/');
+        } else {
+            // Password does not match
+            res.send('Invalid password');
+        }
+    } else {
+        // User does not exist
+        res.send('User does not exist');
+    }
 });
 
 // Start the server
