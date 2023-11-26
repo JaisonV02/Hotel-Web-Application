@@ -155,6 +155,36 @@ app.get('/logout', (req, res) => {
    }); 
 });
 
+// Update Account details
+app.post('/update', async (req, res) => {
+    const {email, firstName, lastName, password} = req.body;
+
+    // Hash the password
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    // Update the account
+    var result = await hotelDB.query('update guest_account set email = $1, first_name = $2, last_name = $3, password = $4 where email = $5', [email, firstName, lastName, hashPassword, req.session.user.email]);
+    result = await hotelDB.query('select * from guest_account where email = $1', [email]);
+    
+    if (result.rowCount > 0) {
+        const user = result.rows[0];
+
+        // Update session
+        req.session.user = {
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email
+        };
+
+        // Redirect to homepage
+        res.redirect('/');
+    } else {
+        res.redirect('/');
+    }
+});
+
+// Delete Account
+
 // Start the server
 app.listen(port, host, (req, res) => {
     console.log('App running on http://' + host + ':' + port + '/');
