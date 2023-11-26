@@ -58,7 +58,7 @@
         </li>
       <% } else { %>
         <li class="nav-item">
-          <a class="nav-link"><b><%= req.session.user.firstName %></b></a>
+          <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/logout">Logout</a>

@@ -78,6 +78,10 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, '../login.html'));
 });
 
+app.get('/accounts', (req, res) => {
+    res.render('accounts', {req: req});
+});
+
 // User registration, add data to the database
 app.post('/register', async (req, res) => {
     const {email, firstName, lastName, password} = req.body;
