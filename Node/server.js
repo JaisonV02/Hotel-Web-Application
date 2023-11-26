@@ -60,17 +60,17 @@ app.get('/', (req, res) => {
 
 // Define the route for the booking page
 app.get('/booking', (req, res) => {
-    res.sendFile(path.join(__dirname, '../booking.html'));
+    res.render('booking', {req: req});
 });
 
 // Define the route for the about page
 app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, '../about.html'));
+    res.render('about', {req: req});
 });
 
 // Define the route for the contact page
 app.get('/contactus', (req, res) => {
-    res.sendFile(path.join(__dirname, '../contactus.html'));
+    res.render('contactus', {req: req});
 });
 
 // Define the route for the login page
