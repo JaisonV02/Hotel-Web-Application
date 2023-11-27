@@ -163,6 +163,8 @@ app.post('/update', async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 10);
     let passwordLength = password.length
 
+    // Checking the length of the user's password
+    // If user inputs any new data into the password form the else statement should activate
     if (passwordLength == 0 ) {
         // Update the account with everything but password
         var result = await hotelDB.query('update guest_account set email = $1, first_name = $2, last_name = $3 where email = $4', [email, firstName, lastName, req.session.user.email]);
