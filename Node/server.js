@@ -161,11 +161,21 @@ app.post('/update', async (req, res) => {
 
     // Hash the password
     const hashPassword = await bcrypt.hash(password, 10);
+    let passwordLength = password.length
 
-    // Update the account
-    var result = await hotelDB.query('update guest_account set email = $1, first_name = $2, last_name = $3, password = $4 where email = $5', [email, firstName, lastName, hashPassword, req.session.user.email]);
-    result = await hotelDB.query('select * from guest_account where email = $1', [email]);
-    
+    if (passwordLength == 0 ) {
+        // Update the account with everything but password
+        var result = await hotelDB.query('update guest_account set email = $1, first_name = $2, last_name = $3 where email = $4', [email, firstName, lastName, req.session.user.email]);
+        result = await hotelDB.query('select * from guest_account where email = $1', [email]);
+
+    } else {
+        // Update the account with full details
+        var result = await hotelDB.query('update guest_account set email = $1, first_name = $2, last_name = $3, password = $4 where email = $5', [email, firstName, lastName, hashPassword, req.session.user.email]);
+        result = await hotelDB.query('select * from guest_account where email = $1', [email]);
+
+    }
+
+
     if (result.rowCount > 0) {
         const user = result.rows[0];
 
