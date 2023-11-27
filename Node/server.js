@@ -75,7 +75,7 @@ app.get('/contactus', (req, res) => {
 
 // Define the route for the login page
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, '../login.html'));
+    res.render('login', {req: req});
 });
 
 app.get('/accounts', (req, res) => {
