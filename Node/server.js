@@ -184,6 +184,23 @@ app.post('/update', async (req, res) => {
 });
 
 // Delete Account
+app.post('/delete', async (req, res) => {
+    // Delete account from database
+    const result = await hotelDB.query('delete from guest_account where email = $1', [req.session.user.email]);
+
+    if (result.rowCount > 0) {
+        // Destroy the session
+        req.session.destroy((err) => {
+           if (err) {
+                return console.log(err);
+           }
+
+           res.redirect('/');
+        });
+    } else {
+        res.send('Could not delete user');
+    }
+});
 
 // Start the server
 app.listen(port, host, (req, res) => {
