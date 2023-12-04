@@ -1,6 +1,9 @@
 <!-- Based on the free W3Schools Bootstrap 5 template -->
 <!-- TODO:
-      
+    Fix resizing issues on booking rows  
+    Add Linking to Book button
+    Backend Queries to find available rooms
+
     
        
 -->
@@ -91,7 +94,53 @@
 </div>
 
 
+<!-- Available rooms -->
+<div class="container" >
+  
+  
+  <!-- Place this in a for loop for each room we have available -->
+  <!-- Do a query for count the rooms available to create max rows -->
+  <!-- Each card corresponds to each row of a resulting select query -->
+  <div class="row align-items-start justify-content-center align-items-center bg-body-tertiary" style="max-height:125px; min-height:125px">
+    
+    <!-- 3 columns: Left=Room image,Middle=Name + Description, Right=Book Now + Price -->
 
+      <!-- Room preview -->
+      <div class="col-md-auto h-100" style="max-width:175px">
+
+        <!-- Add If statements to change image based on Room type -->
+        <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
+      </div>
+      
+      <!-- Name + Desc -->
+      <div class="col h-100"style="max-height:125px" >
+        <!-- Add If statements to change name and desc based on room type -->
+        <H3>Single Bed</H3>
+        <p class="card-text" style="text-overflow:ellipsis;overflow:hidden">Discover the perfect blend of comfort and style in our single-size room, designed for the travelling businessmen looking for luxury comfort.
+          The space includes a comfortable seating area with modern amenities.</p>
+      </div>
+      
+      <!-- Pricing -->
+      <div class="col-md-auto" style="max-width:175px">
+        <!-- Add If statements to change price based on room type -->
+      
+        <h4 class="text-body-secondary">€49/night</h3>
+        
+      </div>
+
+      <!-- Book -->
+      <div class="col-md-auto h-100" style="max-width:108px">
+        
+
+        <button type="button" class="btn btn-sm btn-outline-secondary">Book Now</button>
+        
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<!-- end Available rooms -->
 
 <!-- Footer -->
 <div class="mt-5 p-4 bg-primary text-white text-center">
