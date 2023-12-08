@@ -95,17 +95,17 @@
 
 <!-- Homepage Booking Form -->
 <!-- Booking form templated from Sogo Hotel ThemeWagon -->
-<form action="">
+<form method="POST" action="/bookingForm">
   <div class="row" style="width: 75%; margin: 0 auto;">
 
     <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
       <label for="checkin_date" class="font-weight-bold text-black">Location</label>
-        <select name="" id="location" class="form-control" value="">
-          <option value="" selected="selected">Dublin,IE</option>
-              <option value="">London,UK</option>
-              <option value="">Berlin,DE</option>
-              <option value="">Paris,FR</option>
-              <option value="">Madrid,SPA</option>
+        <select name="location" id="location" class="form-control" value="">
+          <option value="Dublin" selected="selected">Dublin,IE</option>
+              <option value="London">London,UK</option>
+              <option value="Berlin">Berlin,DE</option>
+              <option value="Paris">Paris,FR</option>
+              <option value="Madrid">Madrid,SPA</option>
         </select>
     </div>
 
@@ -113,7 +113,7 @@
       <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
       <div class="field-icon-wrap">
         <div class="icon"><span class="icon-calendar"></span></div>
-        <input type="date" id="checkin_date" class="form-control" value="j">
+        <input type="date" name="checkin_date" id="checkin_date" class="form-control">
       </div>
     </div>
 
@@ -121,7 +121,7 @@
       <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
       <div class="field-icon-wrap">
         <div class="icon"><span class="icon-calendar"></span></div>
-        <input type="date" id="checkout_date" class="form-control">
+        <input type="date" name="checkout_date" id="checkout_date" class="form-control">
       </div>
     </div>
 
@@ -131,13 +131,13 @@
           <label for="adults" class="font-weight-bold text-black">Adults</label>
           <div class="field-icon-wrap">
             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-            <select name="" id="adults" class="form-control">
-              <option value="" selected="selected">1</option>
-              <option value="">2</option>
-              <option value="">3</option>
-              <option value="">4</option>
-              <option value="">5</option>
-              <option value="">6</option>
+            <select name="adults" id="adults" class="form-control">
+              <option value="1" selected="selected">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
             </select>
           </div>
         </div>
@@ -146,13 +146,13 @@
           <label for="children" class="font-weight-bold text-black">Children</label>
           <div class="field-icon-wrap">
             <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-            <select name="" id="children" class="form-control">
-              <option value="" selected="selected">1</option>
-              <option value="">2</option>
-              <option value="">3</option>
-              <option value="">4</option>
-              <option value="">5</option>
-              <option value="">6</option>
+            <select name="children" id="children" class="form-control">
+              <option value="1" selected="selected">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
             </select>
           </div>
         </div>
@@ -164,7 +164,7 @@
     </div>
 
     <div class="col-md-6 col-lg-3 align-self-end">
-      <button class="btn btn-primary btn-block text-white">Book Now</button>
+      <button class="btn btn-primary btn-block text-white" type="submit">Book Now</button>
     </div>
 
   </div>

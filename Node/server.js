@@ -220,6 +220,17 @@ app.post('/delete', async (req, res) => {
     }
 });
 
+// Booking Functions
+// Post booking form
+app.post('/bookingForm', async(req,res) => {
+    const {location,checkin_date,checkout_date,adults,children} = req.body
+    res.redirect('/booking');
+
+    //console.log(location,checkin_date,checkout_date,adults,children);
+
+});
+
+
 // Start the server
 app.listen(port, host, (req, res) => {
     console.log('App running on http://' + host + ':' + port + '/');
