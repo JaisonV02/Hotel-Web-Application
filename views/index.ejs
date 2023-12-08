@@ -2,6 +2,7 @@
 <!-- TODO:
     Remove booking option from navbar - Booking will only be accessed through the booking form
     Make booking form have an action
+    fix new row on booking form
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -96,6 +97,19 @@
 <!-- Booking form templated from Sogo Hotel ThemeWagon -->
 <form action="">
   <div class="row" style="width: 50%; margin: 0 auto;">
+
+    <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+      <label for="checkin_date" class="font-weight-bold text-black">Location</label>
+        <select name="" id="location" class="form-control" value="">
+          <option value="" selected="selected">Dublin</option>
+              <option value="">Dublin</option>
+              <option value="">London</option>
+              <option value="">Berlin</option>
+              <option value="">Paris</option>
+              <option value="">Madrid</option>
+        </select>
+    </div>
+
     <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
       <label for="checkin_date" class="font-weight-bold text-black">Check In</label>
       <div class="field-icon-wrap">
@@ -103,6 +117,7 @@
         <input type="date" id="checkin_date" class="form-control" value="j">
       </div>
     </div>
+
     <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
       <label for="checkout_date" class="font-weight-bold text-black">Check Out</label>
       <div class="field-icon-wrap">
@@ -110,6 +125,7 @@
         <input type="date" id="checkout_date" class="form-control">
       </div>
     </div>
+
     <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
       <div class="row">
         <div class="col-md-6 mb-3 mb-md-0">
@@ -126,6 +142,7 @@
             </select>
           </div>
         </div>
+
         <div class="col-md-6 mb-3 mb-md-0">
           <label for="children" class="font-weight-bold text-black">Children</label>
           <div class="field-icon-wrap">
@@ -142,9 +159,11 @@
         </div>
       </div>
     </div>
+
     <div class="col-md-6 col-lg-3 align-self-end">
       <button class="btn btn-primary btn-block text-white">Book Now</button>
     </div>
+
   </div>
 </form>
 </div>
