@@ -78,8 +78,14 @@ app.get('/login', (req, res) => {
     res.render('login', {req: req});
 });
 
+// Define route for the accounts page
 app.get('/accounts', (req, res) => {
     res.render('accounts', {req: req});
+});
+
+// Define the route for the my bookings page
+app.get('/mybookings', (req, res) => {
+    res.render('mybookings', {req: req});
 });
 
 // User registration, add data to the database
