@@ -277,7 +277,7 @@ app.post('/delete', async (req, res) => {
 // Booking Functions
 // Post booking form
 app.post('/bookingForm', async(req,res) => {
-    const {location,checkin_date,checkout_date,adults,children} = req.body
+    const {location,checkin_date,checkout_date,adults,children} = req.body;
     // Create a session
     req.session.bookingForm = {
         location: location,
@@ -290,9 +290,23 @@ app.post('/bookingForm', async(req,res) => {
 
 
     console.log(location,checkin_date,checkout_date,adults,children);
-
 });
 
+app.post('/bookRoom', async(req,res) => {
+    const {room_id} = req.body; 
+    // Add room_id to bookingForm session
+    req.session.bookingForm = {
+        location: req.session.bookingForm.location,
+        checkin_date: req.session.bookingForm.checkin_date,
+        checkout_date: req.session.bookingForm.checkout_date,
+        adults: req.session.bookingForm.adults,
+        children: req.session.bookingForm.children,
+        room_id: room_id
+    }
+    res.redirect('/PLACEHOLDER');
+    console.log(req.session.bookingForm);
+
+})
 
 // Start the server
 app.listen(port, host, (req, res) => {
