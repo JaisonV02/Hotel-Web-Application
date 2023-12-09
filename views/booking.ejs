@@ -100,7 +100,7 @@
 <!-- Available rooms -->
 <div class="container" >
   
-  
+  <% rooms2.forEach(room => { %>
   <!-- Place this in a for loop for each room we have available -->
   <!-- Do a query for count the rooms available to create max rows -->
   <!-- Each card corresponds to each row of a resulting select query -->
@@ -110,17 +110,38 @@
 
       <!-- Room preview -->
       <div class="col-md-auto h-100" style="max-width:175px">
+        <!-- IF/ELSE block due to images not tied to room type id -->
 
+        <!-- SingleBed -->
+        <% if room.rt_id = 1 { %>
         <!-- Add If statements to change image based on Room type -->
         <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
+        <% } %>
+
+        <!-- Double bed -->
+        <% if room.rt_id = 2 { %>
+          <!-- Add If statements to change image based on Room type -->
+          <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
+        <% } %>
+
+        <!-- Twin bed -->
+        <% if room.rt_id = 3 { %>
+          <!-- Add If statements to change image based on Room type -->
+          <img src="/Bedrooms/twin1.png" class="" alt="..."  height="100px">
+        <% } %>
+
+        <!-- Family room -->
+        <% else { %>
+          <!-- Add If statements to change image based on Room type -->
+          <img src="/Bedrooms/twin1.png" class="" alt="..."  height="100px">
+        <% } %>
       </div>
       
       <!-- Name + Desc -->
       <div class="col h-100"style="max-height:125px" >
         <!-- Add If statements to change name and desc based on room type -->
-        <H3>Single Bed</H3>
-        <p class="card-text" style="text-overflow:ellipsis;overflow:hidden">Discover the perfect blend of comfort and style in our single-size room, designed for the travelling businessmen looking for luxury comfort.
-          The space includes a comfortable seating area with modern amenities.</p>
+        <H3><%=room.rt_name %></H3>
+        <p class="card-text" style="text-overflow:ellipsis;overflow:hidden"><%=room.rt_desc %></p>
       </div>
       
       <!-- Pricing -->
@@ -141,6 +162,7 @@
 
     </div>
   </div>
+  <% }); %>
 
 </div>
 <!-- end Available rooms -->

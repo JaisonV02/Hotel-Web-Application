@@ -76,10 +76,10 @@ app.get('/', async (req, res) => {
 // Define the route for the booking page
 app.get('/booking', async (req, res) => {
     // Get room info based on criteria submitted by booking form
-    try{
-        const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where hotel_id = $1 AND booked = "false" ',[location]);
-        rooms = rooms.rows;
-        res.render('booking', {req: req,rooms: rooms});
+    try {
+        const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where hotel_id = $1 AND booked = false',[req.session.bookingForm.location]);
+        const rooms2 = rooms.rows;
+        res.render('booking', {req: req, rooms2: rooms2});
     } catch (err) {
         res.status(500).send('Server Error');
     }
@@ -260,9 +260,18 @@ app.post('/delete', async (req, res) => {
 // Post booking form
 app.post('/bookingForm', async(req,res) => {
     const {location,checkin_date,checkout_date,adults,children} = req.body
+    // Create a session
+    req.session.bookingForm = {
+        location: location,
+        checkin_date: checkin_date,
+        checkout_date: checkout_date,
+        adults: adults,
+        children: children
+    };
     res.redirect('/booking');
 
-    //console.log(location,checkin_date,checkout_date,adults,children);
+
+    console.log(location,checkin_date,checkout_date,adults,children);
 
 });
 
