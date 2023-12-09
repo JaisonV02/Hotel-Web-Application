@@ -77,7 +77,7 @@ app.get('/', async (req, res) => {
 app.get('/booking', async (req, res) => {
     // Get room info based on criteria submitted by booking form
     try {
-        const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where hotel_id = $1 AND booked = false',[req.session.bookingForm.location]);
+        const rooms = await hotelDB.query('select distinct on(rt_id)* from room join room_type using(rt_id) where hotel_id = $1 AND booked = false',[req.session.bookingForm.location]);
         const rooms2 = rooms.rows;
         res.render('booking', {req: req, rooms2: rooms2});
     } catch (err) {
