@@ -108,7 +108,13 @@ app.get('/login', (req, res) => {
 
 // Define route for the accounts page
 app.get('/accounts', (req, res) => {
-    res.render('accounts', {req: req});
+    // If the user is not logged in, redirect them to the home page
+    if (!req.session.user) {
+        res.redirect('/');
+    } else {
+        // Otherwise render the accounts page
+        res.render('accounts', {req: req});
+    }
 });
 
 // Define the route for the my bookings page
