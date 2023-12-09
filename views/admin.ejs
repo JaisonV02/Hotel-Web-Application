@@ -27,59 +27,59 @@
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header d-flex align-items-center">
-      <a class="navbar-brand">
-        <img src="/Logos/logo-color1.png" class="me-3">
-        <b>Royal Hotels</b>
-      </a>
-    </div>
-    <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
-      <li class="nav-item">
-        <a class="nav-link" href="/"><b>Home</b></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="about"><b>About</b></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="contactus"><b>Contact Us</b></a>
-      </li>
-    </ul>
-    <ul class="navbar-nav mb-2 mb-lg-0">
-      <% if (!req.session.user) { %>
+    <div class="container-fluid">
+      <div class="navbar-header d-flex align-items-center">
+        <a class="navbar-brand">
+          <img src="/Logos/logo-color1.png" class="me-3">
+          <b>Royal Hotels</b>
+        </a>
+      </div>
+      <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="login"><b>Login</b></a>
+          <a class="nav-link" href="/"><b>Home</b></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="login"><b>Register</b></a>
+          <a class="nav-link" href="about"><b>About</b></a>
         </li>
-      <% } else { %>
-        <% if (req.session.user && req.session.user.email == 'admin@royalhotels.com') { %>
+        <li class="nav-item">
+          <a class="nav-link" href="contactus"><b>Contact Us</b></a>
+        </li>
+      </ul>
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <% if (!req.session.user) { %>
           <li class="nav-item">
-            <a class="nav-link" href="/admin"><b>Manage</b></a>
+            <a class="nav-link" href="login"><b>Login</b></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+            <a class="nav-link" href="login"><b>Register</b></a>
           </li>
         <% } else { %>
-          <li class="nav-item">
-            <a class="nav-link" href="/mybookings"><b>My Bookings</b></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
-          </li>
+          <% if (req.session.user && req.session.user.email == 'admin@royalhotels.com') { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/admin"><b>Manage</b></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/mybookings"><b>My Bookings</b></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+          <% } %>
         <% } %>
-      <% } %>
-    </ul>
-  </div>
-</nav>
-<!-- End Navbar -->
+      </ul>
+    </div>
+  </nav>
+  <!-- End Navbar -->
 
 <!-- Divs to add spacing between the top of the page and the image -->
 <div class="mt-2 col-md-12">

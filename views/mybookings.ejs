@@ -56,6 +56,9 @@
       <% } else { %>
         <% if (req.session.user && req.session.user.email == 'admin@royalhotels.com') { %>
           <li class="nav-item">
+            <a class="nav-link" href="/admin"><b>Manage</b></a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
           </li>
           <li class="nav-item">

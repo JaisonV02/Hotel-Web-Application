@@ -95,6 +95,16 @@ app.get('/contactus', (req, res) => {
     res.render('contactus', {req: req});
 });
 
+// Define the route for the admin page
+app.get('/admin', (req, res) => {
+    if (req.session.user && req.session.user.email == 'admin@royalhotels.com') {
+        res.render('admin', {req: req});
+    } else {
+        // Redirect to the home page
+        res.redirect('/');
+    }
+});
+
 // Define the route for the login page
 app.get('/login', (req, res) => {
     // If the user is logged in, redirect them to the home page
