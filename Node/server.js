@@ -66,8 +66,15 @@ app.get('/', async (req, res) => {
 });
 
 // Define the route for the booking page
-app.get('/booking', (req, res) => {
-    res.render('booking', {req: req});
+app.get('/booking', async (req, res) => {
+    // Gets the size of the rows to be displayed in booking page
+    try{
+        const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where hotel_id = $1 AND booked = "false" ',[location]);
+        rooms = rooms.rows;
+        res.render('booking', {req: req,rooms: rooms});
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
 });
 
 // Define the route for the about page
