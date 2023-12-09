@@ -82,7 +82,13 @@ app.get('/contactus', (req, res) => {
 
 // Define the route for the login page
 app.get('/login', (req, res) => {
-    res.render('login', {req: req});
+    // If the user is logged in, redirect them to the home page
+    if (req.session.user) {
+        res.redirect('/');
+    } else {
+        // Otherwise render the login page
+        res.render('login', {req: req});
+    }
 });
 
 // Define route for the accounts page
@@ -223,7 +229,7 @@ app.post('/delete', async (req, res) => {
            res.redirect('/');
         });
     } else {
-        res.send('Could not delete user');
+        res.redirect('/');
     }
 });
 
