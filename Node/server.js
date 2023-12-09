@@ -231,9 +231,11 @@ app.post('/update', async (req, res) => {
         };
 
         // Redirect to homepage
-        res.redirect('/');
+        req.flash('success', 'Account updated successfully');
+        res.redirect('/accounts');
     } else {
-        res.redirect('/');
+        req.flash('error', 'Account could not be updated');
+        res.redirect('/accounts');
     }
 });
 
