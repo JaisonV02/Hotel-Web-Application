@@ -86,6 +86,20 @@ below the signup form -->
   </div>
 </div>
 
+<!-- Flash  messages -->
+<!-- Display flash messages -->
+<% if (messages.success) { %>
+  <div class="alert alert-success">
+      <%= messages.success %>
+  </div>
+<% } %>
+<% if (messages.error) { %>
+  <div class="alert alert-danger">
+      <%= messages.error %>
+  </div>
+<% } %>
+<!-- end flash messages -->
+
 <!-- Login Forms -->
 <div class="container">
     <div class="row">

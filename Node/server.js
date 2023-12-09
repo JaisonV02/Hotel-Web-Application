@@ -6,6 +6,7 @@ const pg = require('pg');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const flash = require('connect-flash');
 
 // Server port and host
 const port = 8080;
@@ -47,6 +48,13 @@ app.use(session({
     resave: false,
     saveUnitialized: false
 }));
+
+// Use flash
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.messages = req.flash();
+    next();
+});
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../CSS')));
@@ -109,23 +117,29 @@ app.post('/register', async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 10);
 
     // Insert user into the database
-    var result = await hotelDB.query('insert into guest_account (email, first_name, last_name, password) values ($1, $2, $3, $4)', [email, firstName, lastName, hashPassword]);
-
-    if (result.rowCount > 0) {
-        // Log the user in after registration
-        result = await hotelDB.query('select * from guest_account where email = $1', [email]);
-        const user = result.rows[0];
-
-        req.session.user = {
-            firstName: user.first_name,
-            lastName: user.last_name,
-            email: user.email
-        };
-
-        res.redirect('/');
-
-    } else {
-        res.send('Error registering user');
+    try{
+        var result = await hotelDB.query('insert into guest_account (email, first_name, last_name, password) values ($1, $2, $3, $4)', [email, firstName, lastName, hashPassword]);
+    
+        if (result.rowCount > 0) {
+            // Log the user in after registration
+            result = await hotelDB.query('select * from guest_account where email = $1', [email]);
+            const user = result.rows[0];
+    
+            req.session.user = {
+                firstName: user.first_name,
+                lastName: user.last_name,
+                email: user.email
+            };
+    
+            res.redirect('/');
+    
+        } else {
+            req.flash('error', 'Error registering user');
+            res.redirect('/login');
+        }
+    } catch (err) {
+        req.flash('error', 'This email is already in use');
+        res.redirect('/login');
     }
 });
 
@@ -155,11 +169,13 @@ app.post('/login', async (req, res) => {
             res.redirect('/');
         } else {
             // Password does not match
-            res.redirect('/');
+            req.flash('error', 'Invalid password');
+            res.redirect('/login');
         }
     } else {
         // User does not exist
-        res.redirect('/');
+        req.flash('error', 'User does not exist');
+        res.redirect('/login');
     }
 });
 
