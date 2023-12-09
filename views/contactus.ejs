@@ -54,15 +54,24 @@
           <a class="nav-link" href="login"><b>Register</b></a>
         </li>
       <% } else { %>
-        <li class="nav-item">
-          <a class="nav-link" href="/mybookings"><b>My Bookings</b></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
-        </li>
+        <% if (req.session.user && req.session.user.email == 'admin@royalhotels.com') { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/mybookings"><b>My Bookings</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        <% } %>
       <% } %>
     </ul>
   </div>
