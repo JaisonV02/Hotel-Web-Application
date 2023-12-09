@@ -99,11 +99,9 @@
 
 <!-- Available rooms -->
 <div class="container" >
-  
+  <!-- For loop to make a new row for each room that matches search criteria -->
   <% rooms2.forEach(room => { %>
-  <!-- Place this in a for loop for each room we have available -->
-  <!-- Do a query for count the rooms available to create max rows -->
-  <!-- Each card corresponds to each row of a resulting select query -->
+  
   <div class="row align-items-start justify-content-center align-items-center bg-body-tertiary" style="max-height:125px; min-height:125px">
     
     <!-- 3 columns: Left=Room image,Middle=Name + Description, Right=Book Now + Price -->
@@ -113,27 +111,25 @@
         <!-- IF/ELSE block due to images not tied to room type id -->
 
         <!-- SingleBed -->
-        <% if room.rt_id = 1 { %>
+        <% if (room.rt_id == 1) { %>
         <!-- Add If statements to change image based on Room type -->
         <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
-        <% } %>
+        
 
         <!-- Double bed -->
-        <% if room.rt_id = 2 { %>
+        <% } else if (room.rt_id == 2) { %>
           <!-- Add If statements to change image based on Room type -->
           <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
-        <% } %>
 
         <!-- Twin bed -->
-        <% if room.rt_id = 3 { %>
+        <% } else if (room.rt_id == 3) { %>
           <!-- Add If statements to change image based on Room type -->
           <img src="/Bedrooms/twin1.png" class="" alt="..."  height="100px">
-        <% } %>
 
         <!-- Family room -->
-        <% else { %>
-          <!-- Add If statements to change image based on Room type -->
-          <img src="/Bedrooms/twin1.png" class="" alt="..."  height="100px">
+        <% } else { %>
+          <!-- Hack solution on max width, no problems so far -Chris -->
+          <img src="/Bedrooms/family1.png" class="" alt="..."  height="100px" style="max-width:150px">
         <% } %>
       </div>
       
@@ -160,7 +156,7 @@
         
       </div>
 
-    </div>
+    
   </div>
   <% }); %>
 
