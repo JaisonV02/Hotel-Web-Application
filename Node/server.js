@@ -85,6 +85,16 @@ app.get('/booking', async (req, res) => {
     }
 });
 
+app.get('/bookingaddons', async (req, res)=> {
+    try {
+        const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where room_id = $1',[req.session.bookingForm.room_id]);
+        const rooms2 = rooms.rows;
+        res.render('bookingaddons', {req: req, rooms2: rooms2});
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
+})
+
 // Define the route for the about page
 app.get('/about', (req, res) => {
     res.render('about', {req: req});
@@ -303,7 +313,7 @@ app.post('/bookRoom', async(req,res) => {
         children: req.session.bookingForm.children,
         room_id: room_id
     }
-    res.redirect('/PLACEHOLDER');
+    res.redirect('/bookingaddons');
     console.log(req.session.bookingForm);
 
 })

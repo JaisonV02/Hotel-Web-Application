@@ -1,0 +1,178 @@
+<!-- Based on the free W3Schools Bootstrap 5 template -->
+<!-- TODO:
+      
+    
+       
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Royal Hotels</title>
+  <link rel="icon" type="image/x-icon" href="/Logos/favicon.ico">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/custom.css" rel="stylesheet">
+  <link href="/style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+  .fakeimg {
+    height: 200px;
+    background: #aaa;
+  }
+  </style>
+</head>
+
+
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header d-flex align-items-center">
+      <a class="navbar-brand">
+        <img src="/Logos/logo-color1.png" class="me-3">
+        <b>Royal Hotels</b>
+      </a>
+    </div>
+    <ul class="nav navbar-nav me-auto mb-2 mb-lg-0">
+      <li class="nav-item">
+        <a class="nav-link" href="/"><b>Home</b></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="about"><b>About</b></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="contactus"><b>Contact Us</b></a>
+      </li>
+    </ul>
+    <ul class="navbar-nav mb-2 mb-lg-0">
+      <% if (!req.session.user) { %>
+        <li class="nav-item">
+          <a class="nav-link" href="login"><b>Login</b></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="login"><b>Register</b></a>
+        </li>
+      <% } else { %>
+        <% if (req.session.user && req.session.user.email == 'admin@royalhotels.com') { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin"><b>Manage</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        <% } else { %>
+          <li class="nav-item">
+            <a class="nav-link" href="/mybookings"><b>My Bookings</b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/accounts"><b><%= req.session.user.firstName %></b></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        <% } %>
+      <% } %>
+    </ul>
+  </div>
+</nav>
+<!-- End Navbar -->
+
+<!-- Divs to add spacing between the top of the page and the image -->
+<div class="mt-2 col-md-12">
+  <p class="text-white prevent-select">Spacing</p>
+</div>
+<div class="mt-2 col-md-12">
+  <p class="text-white prevent-select">Spacing</p>
+</div>
+<div class="mt-2 col-md-12">
+  <p class="text-white prevent-select">Spacing</p>
+</div>
+
+<!-- Header of website -->
+<div class="p-4 image-container">
+  <img src="/Generic/BalconyView1Cropped.png" class="img-fluid rounded">
+  <div class="top-right">
+    <img src="/Logos/logo-color.png" class="img-fluid me-3">
+  </div>
+</div>
+
+
+<div class="container">
+  <!-- Recycling from booking.ejs, with new parameters it should always output 1 row -->
+  <!-- Just acting as a reminder to the customer of what they are booking -->
+  <% rooms2.forEach(room => { %>
+    <form method="POST" action="/bookRoom">
+    <div class="row align-items-start justify-content-center align-items-center bg-body-tertiary" style="max-height:125px; min-height:125px">
+      
+      <!-- 3 columns: Left=Room image,Middle=Name + Description, Right=Book Now + Price -->
+  
+        <!-- Room preview -->
+        <div class="col-md-auto h-100" style="max-width:175px">
+          <!-- IF/ELSE block due to images not tied to room type id -->
+  
+          <!-- SingleBed -->
+          <% if (room.rt_id == 1) { %>
+          
+          <img src="/Bedrooms/Single1.png" class="" alt="..."  height="100px">
+          
+          <!-- Double bed -->
+          <% } else if (room.rt_id == 2) { %>
+            
+            <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
+  
+          <!-- Twin bed -->
+          <% } else if (room.rt_id == 3) { %>
+            
+            <img src="/Bedrooms/twin1.png" class="" alt="..."  height="100px">
+  
+          <!-- Family room -->
+          <% } else { %>
+            <!-- Hack solution on max width, but no problems so far -Chris -->
+            <img src="/Bedrooms/family1.png" class="" alt="..."  height="100px" style="max-width:150px">
+          <% } %>
+        </div> 
+        <!-- End Room preview div -->
+        
+        
+        <!-- Name + Desc -->
+        <div class="col h-100"style="max-height:125px" >
+          <!-- Passing room id as a parameter in the form -->
+          <H3><%= room.rt_name %></H3>
+          <p class="card-text" style="text-overflow:ellipsis;overflow:hidden"><%= room.rt_desc %></p>
+        </div>
+        
+        <!-- Pricing -->
+        <div class="col-md-auto" style="max-width:175px">
+        
+          <h4 class="text-body-secondary">€<%= room.price %>/night</h3>
+          
+        </div>
+  
+      
+    </div>
+    </form>
+    <% }); %>
+    <!-- End Room Preview -->
+
+    <!-- Guest information form -->
+    <!-- For loop based on adults and children number gathered
+    This form will only intake first names of guests
+    Button at the end submitting all info and finally marking the room id as booked
+    by session.user.email -->
+
+</div>
+
+<!-- Footer -->
+<div class="mt-5 p-4 bg-primary text-white text-center">
+  <img src="/Logos/twitter.png" class="social-logo">  
+  <img src="/Logos/facebook.png" class="social-logo"> 
+  <img src="/Logos/linkedin.png" class="social-logo">
+  <img src="/Logos/instagram.png" class="social-logo">  
+</div>
+<!-- End Footer -->
+</body>
+</html>
