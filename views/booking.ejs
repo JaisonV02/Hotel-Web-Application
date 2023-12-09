@@ -107,7 +107,7 @@
 <div class="container" >
   <!-- For loop to make a new row for each room that matches search criteria -->
   <% rooms2.forEach(room => { %>
-  
+  <form method="POST" action="/PLACEHOLDER">
   <div class="row align-items-start justify-content-center align-items-center bg-body-tertiary" style="max-height:125px; min-height:125px">
     
     <!-- 3 columns: Left=Room image,Middle=Name + Description, Right=Book Now + Price -->
@@ -118,55 +118,55 @@
 
         <!-- SingleBed -->
         <% if (room.rt_id == 1) { %>
-        <!-- Add If statements to change image based on Room type -->
-        <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
         
-
+        <img src="/Bedrooms/Single1.png" class="" alt="..."  height="100px">
+        
         <!-- Double bed -->
         <% } else if (room.rt_id == 2) { %>
-          <!-- Add If statements to change image based on Room type -->
+          
           <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
 
         <!-- Twin bed -->
         <% } else if (room.rt_id == 3) { %>
-          <!-- Add If statements to change image based on Room type -->
+          
           <img src="/Bedrooms/twin1.png" class="" alt="..."  height="100px">
 
         <!-- Family room -->
         <% } else { %>
-          <!-- Hack solution on max width, no problems so far -Chris -->
+          <!-- Hack solution on max width, but no problems so far -Chris -->
           <img src="/Bedrooms/family1.png" class="" alt="..."  height="100px" style="max-width:150px">
         <% } %>
-      </div>
+      </div> 
+      <!-- End Room preview div -->
+      
       
       <!-- Name + Desc -->
       <div class="col h-100"style="max-height:125px" >
-        <!-- Add If statements to change name and desc based on room type -->
-        <H3><%= room.rt_name %></H3>
+        <!-- Passing room id as a parameter in the form -->
+        <H3 name="room_id" id="room_id" value="<%= room.room_id %>"><%= room.rt_name %></H3>
         <p class="card-text" style="text-overflow:ellipsis;overflow:hidden"><%= room.rt_desc %></p>
       </div>
       
       <!-- Pricing -->
       <div class="col-md-auto" style="max-width:175px">
-        <!-- Add If statements to change price based on room type -->
       
-        <h4 class="text-body-secondary">€49/night</h3>
+        <h4 class="text-body-secondary">€<%= room.price %>/night</h3>
         
       </div>
 
       <!-- Book -->
       <div class="col-md-auto h-100" style="max-width:108px">
         
-
-        <button type="button" class="btn btn-sm btn-outline-secondary">Book Now</button>
+        <button type="submit" class="btn btn-sm btn-outline-secondary">Book Now</button>
         
       </div>
 
     
   </div>
+  </form>
   <% }); %>
 
-</div>
+</div><!-- End Container div -->
 <!-- end Available rooms -->
 
 <!-- Footer -->
