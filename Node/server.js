@@ -75,13 +75,18 @@ app.get('/', async (req, res) => {
 
 // Define the route for the booking page
 app.get('/booking', async (req, res) => {
-    // Get room info based on criteria submitted by booking form
-    try {
-        const rooms = await hotelDB.query('select distinct on(rt_id)* from room join room_type using(rt_id) where hotel_id = $1 AND booked = false',[req.session.bookingForm.location]);
-        const rooms2 = rooms.rows;
-        res.render('booking', {req: req, rooms2: rooms2});
-    } catch (err) {
-        res.status(500).send('Server Error');
+    if(req.session.user) {
+        // Get room info based on criteria submitted by booking form
+        try {
+            const rooms = await hotelDB.query('select distinct on(rt_id)* from room join room_type using(rt_id) where hotel_id = $1 AND booked = false',[req.session.bookingForm.location]);
+            const rooms2 = rooms.rows;
+            res.render('booking', {req: req, rooms2: rooms2});
+        } catch (err) {
+            res.status(500).send('Server Error');
+        }
+    } else {
+        req.flash('error', 'Please login before you book');
+        res.redirect('/');
     }
 });
 
