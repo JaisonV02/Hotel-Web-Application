@@ -54,8 +54,15 @@ app.use(express.static(path.join(__dirname, '../Images')));
 app.use(express.static(path.join(__dirname, '../JS')));
 
 // Define the route for the home page
-app.get('/', (req, res) => {
-    res.render('index', {req: req});
+app.get('/', async (req, res) => {
+    // Retrieve all the locations available for home page bookings
+    try {
+        const query = await hotelDB.query('select * from hotel');
+        const locations = query.rows;
+        res.render('index', {req: req, locations: locations});
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
 });
 
 // Define the route for the booking page

@@ -100,13 +100,11 @@
 
     <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
       <label for="checkin_date" class="font-weight-bold text-black">Location</label>
-        <select name="location" id="location" class="form-control" value="">
-          <option value="Dublin" selected="selected">Dublin,IE</option>
-              <option value="London">London,UK</option>
-              <option value="Berlin">Berlin,DE</option>
-              <option value="Paris">Paris,FR</option>
-              <option value="Madrid">Madrid,SPA</option>
-        </select>
+      <select name="location" id="location" class="form-control">
+        <% locations.forEach(hotel => { %>
+          <option value="<%= hotel.hotel_id %>"><%= hotel.city %>, <%= hotel.country %></option>
+        <% }); %>
+      </select>        
     </div>
 
     <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
