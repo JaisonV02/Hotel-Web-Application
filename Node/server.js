@@ -106,9 +106,15 @@ app.get('/contactus', (req, res) => {
 });
 
 // Define the route for the admin page
-app.get('/admin', (req, res) => {
+app.get('/admin', async (req, res) => {
     if (req.session.user && req.session.user.email == 'admin@royalhotels.com') {
-        res.render('admin', {req: req});
+        try {
+            const query = await hotelDB.query('select * from room join room_type using (rt_id) join hotel using (hotel_id)');
+            const rooms = query.rows;
+            res.render('admin', {req: req, rooms: rooms});
+        } catch (err) {
+            res.status(500).send('Server Error');
+        }
     } else {
         // Redirect to the home page
         res.redirect('/');
@@ -316,7 +322,7 @@ app.post('/bookRoom', async(req,res) => {
     res.redirect('/bookingaddons');
     console.log(req.session.bookingForm);
 
-})
+});
 
 // Start the server
 app.listen(port, host, (req, res) => {
