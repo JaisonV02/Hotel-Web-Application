@@ -62,9 +62,11 @@ The views folder contains all our web pages which are all .ejs files. Most of th
 [admin.ejs](/views/admin.ejs) is a page only someone who is signed in as an admin can access. This page allows you to add and delete rooms accross the hotels.
 ![Admin](/Images/Screenshots/Admin.png)
 
-[booking.ejs](/views/booking.ejs)
+[booking.ejs](/views/booking.ejs) is a page where the user can select which room they want to book.
+![Booking](/Images/Screenshots/Booking.png)
 
-[bookingaddons.ejs](/views/bookingaddons.ejs)
+[bookingaddons.ejs](/views/bookingaddons.ejs) is a page where the user can enter the names of the guest they want to book for.
+![Booking Addons](/Images/Screenshots/Bookingaddon.png)
 
 [contactus.ejs](/views/contactus.ejs) is the contact us page.
 ![Contact Us](/Images/Screenshots/Contactus.png)
@@ -74,3 +76,6 @@ The views folder contains all our web pages which are all .ejs files. Most of th
 
 [mybookings.ejs](/views/mybookings.ejs) is the page where the user can view all their bookings and edit them.
 ![My Bookings](/Images/Screenshots/Mybookings.png)
+
+### Gitignore
+Gitignore tells git to ignore the node modules because it is unecessary to push. The .env file is ignored because it contains sensitive information.
