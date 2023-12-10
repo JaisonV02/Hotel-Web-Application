@@ -64,6 +64,10 @@ create table room (
 );
 
 -- Values
+-- Insert admin account
+insert into guest_account (email, first_name, password)
+values ('admin@royalhotels.com', 'Admin', 'admin');
+
 -- Insert Hotels
 insert into hotel (city, country)
 values
