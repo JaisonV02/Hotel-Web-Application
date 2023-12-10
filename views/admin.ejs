@@ -83,13 +83,13 @@
 
 <!-- Divs to add spacing between the top of the page and the image -->
 <div class="mt-2 col-md-12">
-  <p class="text-white prevent-select">Spacing</p>
+  <p class="text-white prevent-select" style="visibility: hidden;">Spacing</p>
 </div>
 <div class="mt-2 col-md-12">
-  <p class="text-white prevent-select">Spacing</p>
+  <p class="text-white prevent-select" style="visibility: hidden;">Spacing</p>
 </div>
 <div class="mt-2 col-md-12">
-  <p class="text-white prevent-select">Spacing</p>
+  <p class="text-white prevent-select" style="visibility: hidden;">Spacing</p>
 </div>
 
 <!-- Header of website -->
@@ -120,6 +120,50 @@
   </div>
 <% } %>
 <!-- end flash messages -->
+
+<!-- Add room form -->
+<form method="POST" action="/admin/add/room">
+  <div class="row" style="width: 75%; margin: 0 auto;">
+    <h4>Add Room</h4>
+    <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+      <label for="location" class="font-weight-bold text-black">Location</label>
+      <select name="location" id="location" class="form-control">
+        <% locations.forEach(hotel => { %>
+          <option value="<%= hotel.hotel_id %>"><%= hotel.city %>, <%= hotel.country %></option>
+        <% }); %>
+      </select>        
+    </div>
+
+    <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+      <label for="roomtype" class="font-weight-bold text-black">Room type</label>
+      <select name="room_type" id="room_type" class="form-control">
+        <% room_type.forEach(type => { %>
+          <option value="<%= type.rt_id %>"><%= type.rt_name %>, (<%= type.guest_capacity %>)</option>
+        <% }); %>
+      </select>        
+    </div>
+
+    <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
+      <label for="roomno" class="font-weight-bold text-black">Room No.</label>
+      <input type="number" id="room_no" name="room_no" class="form-control" step="1">
+    </div>
+
+    <div class="mt-2 col-md-12">
+      <p class="text-white prevent-select"></p>
+    </div>
+
+    <div class="col-md-6 col-lg-3 align-self-end">
+      <button class="btn btn-primary btn-block text-white" type="submit">Add Room</button>
+    </div>
+
+    <div class="mt-2 col-md-12">
+      <p class="text-white prevent-select"></p>
+    </div>
+
+  </div>
+</form>
+</div>
+<!-- End add room form -->
 
 <!-- Display all rooms -->
 <div class="container" >

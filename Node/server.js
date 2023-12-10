@@ -111,7 +111,11 @@ app.get('/admin', async (req, res) => {
         try {
             const query = await hotelDB.query('select * from room join room_type using (rt_id) join hotel using (hotel_id)');
             const rooms = query.rows;
-            res.render('admin', {req: req, rooms: rooms});
+            const query2 = await hotelDB.query('select * from hotel');
+            const locations = query2.rows;
+            const query3 = await hotelDB.query('select * from room_type');
+            const room_type = query3.rows;
+            res.render('admin', {req: req, rooms: rooms, locations: locations, room_type: room_type});
         } catch (err) {
             res.status(500).send('Server Error');
         }
@@ -330,6 +334,25 @@ app.post('/bookRoom', async(req,res) => {
 });
 
 // Admin functions
+// Add rooms
+app.post('/admin/add/room', async(req,res) => {
+    try {
+        const {location, room_type, room_no} = req.body;
+        const result = await hotelDB.query('insert into room (rt_id, hotel_id, room_no, booked) values ($1, $2, $3, FALSE)', [room_type, location, room_no]);
+    
+        if (result.rowCount > 0) {
+            req.flash('success', 'Room successfully added');
+            res.redirect('/admin');
+        } else {
+            req.flash('error', 'Could not add room');
+            res.redirect('/admin');
+        }
+    } catch (err) {
+        req.flash('error', 'Could not add room');
+        res.redirect('/admin');
+    }
+});
+
 // Delete rooms
 app.post('/admin/delete/room', async(req, res) => {
     try {
