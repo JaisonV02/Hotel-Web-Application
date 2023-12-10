@@ -148,9 +148,27 @@ app.get('/accounts', (req, res) => {
 });
 
 // Define the route for the my bookings page
-app.get('/mybookings', (req, res) => {
-    res.render('mybookings', {req: req});
+app.get('/mybookings', async (req, res) => {
+    // Get room info based on rooms booked by the user
+    try {
+        const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where booked_by_email = $1 AND booked = true',[req.session.user.email]);
+        const rooms2 = rooms.rows;
+        res.render('mybookings', {req: req, rooms2: rooms2});
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
 });
+
+app.get('/mybookingsedit' , async (req,res) => {
+    try{
+        const {room_id} = req.body;
+        const guests = await hotelDB.query('select * from guests where room_id = $1',[room_id]);
+        const guestsrows = guests.rows;
+        res.render('mybookingsedit', {req:req ,guestrows: guestrows });
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
+})
 
 // User registration, add data to the database
 app.post('/register', async (req, res) => {

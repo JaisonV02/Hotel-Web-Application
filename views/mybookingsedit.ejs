@@ -93,8 +93,6 @@
 </div>
 
 <!-- Header of website -->
-<!-- Find image with better aspect ratio possibly something using widescreen format -->
-<!-- Fix caption text -->
 <div class="p-4 image-container">
   <img src="/Generic/BalconyView1Cropped.png" class="img-fluid rounded">
   <div class="top-right">
@@ -102,73 +100,79 @@
   </div>
 </div>
 
-<!-- Show bookings cards -->
 
-<!-- Available rooms -->
-<div class="container" >
-  <!-- For loop to make a new row for each room that matches search criteria -->
+<div class="container">
+  <!-- Recycling from booking.ejs, with new parameters it should always output 1 row -->
+  <!-- Just acting as a reminder to the customer of what they are booking -->
   <% rooms2.forEach(room => { %>
-  <form method="POST" action="/mybookingsedit">
-  <div class="row align-items-start justify-content-center align-items-center bg-body-tertiary" style="max-height:125px; min-height:125px">
-    
-    <!-- 3 columns: Left=Room image,Middle=Name + Description, Right=Book Now + Price -->
-
-      <!-- Room preview -->
-      <div class="col-md-auto h-100" style="max-width:175px">
-        <!-- IF/ELSE block due to images not tied to room type id -->
-
-        <!-- SingleBed -->
-        <% if (room.rt_id == 1) { %>
-        
-        <img src="/Bedrooms/Single1.png" class="" alt="..."  height="100px">
-        
-        <!-- Double bed -->
-        <% } else if (room.rt_id == 2) { %>
+    <div class="row align-items-start justify-content-center align-items-center bg-body-tertiary" style="max-height:125px; min-height:125px">
+      
+      <!-- 3 columns: Left=Room image,Middle=Name + Description, Right=Book Now + Price -->
+  
+        <!-- Room preview -->
+        <div class="col-md-auto h-100" style="max-width:175px">
+          <!-- IF/ELSE block due to images not tied to room type id -->
+  
+          <!-- SingleBed -->
+          <% if (room.rt_id == 1) { %>
           
-          <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
-
-        <!-- Twin bed -->
-        <% } else if (room.rt_id == 3) { %>
+          <img src="/Bedrooms/Single1.png" class="" alt="..."  height="100px">
           
-          <img src="/Bedrooms/twin1.png" class="" alt="..."  height="100px">
-
-        <!-- Family room -->
-        <% } else { %>
-          <!-- Hack solution on max width, but no problems so far -Chris -->
-          <img src="/Bedrooms/family1.png" class="" alt="..."  height="100px" style="max-width:150px">
-        <% } %>
-      </div> 
-      <!-- End Room preview div -->
-      
-      
-      <!-- Name + Desc -->
-      <div class="col h-100"style="max-height:125px" >
-        <!-- Passing room id as a parameter in the form -->
-        <H3><%= room.rt_name %></H3>
-        <p class="card-text" style="text-overflow:ellipsis;overflow:hidden"><%= room.rt_desc %></p>
-      </div>
-      
-      <!-- Pricing -->
-      <div class="col-md-auto" style="max-width:175px">
-      
-        <h4 class="text-body-secondary">€<%= room.price %>/night</h3>
+          <!-- Double bed -->
+          <% } else if (room.rt_id == 2) { %>
+            
+            <img src="/Bedrooms/Single3.png" class="" alt="..."  height="100px">
+  
+          <!-- Twin bed -->
+          <% } else if (room.rt_id == 3) { %>
+            
+            <img src="/Bedrooms/twin1.png" class="" alt="..."  height="100px">
+  
+          <!-- Family room -->
+          <% } else { %>
+            <!-- Hack solution on max width, but no problems so far -Chris -->
+            <img src="/Bedrooms/family1.png" class="" alt="..."  height="100px" style="max-width:150px">
+          <% } %>
+        </div> 
+        <!-- End Room preview div -->
         
-      </div>
-
-      <!-- Button -->
-      <div class="col-md-auto h-100" style="max-width:108px">
         
-        <button type="submit" class="btn btn-sm btn-outline-secondary" name="room_id" id="room_id" value="<%= room.room_id %>">Edit</button>
+        <!-- Name + Desc -->
+        <div class="col h-100"style="max-height:125px" >
+          <!-- Passing room id as a parameter in the form -->
+          <H3><%= room.rt_name %></H3>
+          <p class="card-text" style="text-overflow:ellipsis;overflow:hidden"><%= room.rt_desc %></p>
+        </div>
         
-      </div>
-
-    
-  </div>
-  </form>
+        <!-- Pricing -->
+        <div class="col-md-auto" style="max-width:175px">
+        
+          <h4 class="text-body-secondary">€<%= room.price %>/night</h3>
+          
+        </div>
+    </div>
   <% }); %>
+    <!-- End Room Preview -->
 
-</div><!-- End Container div -->
-<!-- end Available rooms -->
+  <!-- Guest information form -->
+  <!-- This form only takes in the names of each guest
+  but only displays the required forms based on the number of adults + children -->
+    
+  <form method="POST" action="/book">
+    <div class="col-sm-5">
+      <h1 class="h3 mb-3 fw-normal">Guest names:</h1>
+      <% for (var i =1;i< (parseInt(req.session.bookingForm.adults) + parseInt(req.session.bookingForm.children) + 1); i++) { %>
+      <div class="form-floating">
+          <input type="text" class="form-control" id="<%='guest'+i%>" name="<%='guest'+i%>" placeholder="<%='guest'+i %>">
+          <label for="floatingInput"><%='guest' + (i)%>:</label>
+      </div>
+    
+    <% } %>
+    </div>
+    <button class="btn btn-primary w-100 py-2" type="submit">Finish Booking</button> 
+  </form>
+</div> <!-- End Container -->
+
 
 <!-- Footer -->
 <!-- https://getbootstrap.com/docs/5.1/examples/footers/ -->
