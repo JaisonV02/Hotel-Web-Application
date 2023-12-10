@@ -7,7 +7,7 @@ This Hotel Web Application for a hotels we named Royal Hotels implements Bootstr
 ![Home Page](/Images/Screenshots/Homepage.png)
 
 ## Configuration and Deployment
-To deploy this project using Node, first we must setup the database. Using the SQL file [Hotel.sql](/Node/sql/Hotel.sql) to create a database for this website, we should be able to start deploying the database. This web application uses Postgres databases.
+To deploy this project using Node, first we must setup the database. Using the SQL file [Hotel.sql](/Node/sql/Hotel.sql) or [Hotel_DB_Dump.sql](/Node/sql/Hotel_DB_Dump.sql) which is a dump of our database to create a database for this website, we should be able to start deploying the database. This web application uses Postgres databases.
 
 Once we have setup the database, next we must create a .env file and place it inside the /Node folder.
 

@@ -7,3 +7,6 @@ Node/node_modules
 
 # .env files
 Node/.env
+
+# Other files
+readme.txt
