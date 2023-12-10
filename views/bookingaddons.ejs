@@ -158,18 +158,17 @@
   <!-- This form only takes in the names of each guest
   but only displays the required forms based on the number of adults + children -->
     
-  <form method="POST" action="/addGuests">
+  <form method="POST" action="/book">
     <div class="col-sm-5">
       <h1 class="h3 mb-3 fw-normal">Guest names:</h1>
-      <% for (var i =0;i< (parseInt(req.session.bookingForm.adults) + parseInt(req.session.bookingForm.children)); i++) { %>
+      <% for (var i =1;i< (parseInt(req.session.bookingForm.adults) + parseInt(req.session.bookingForm.children) + 1); i++) { %>
       <div class="form-floating">
           <input type="text" class="form-control" id="<%='guest'+i%>" name="<%='guest'+i%>" placeholder="<%='guest'+i %>">
-          <label for="floatingInput"><%='guest' + (i + 1)%>:</label>
+          <label for="floatingInput"><%='guest' + (i)%>:</label>
       </div>
     
     <% } %>
     </div>
-
     <button class="btn btn-primary w-100 py-2" type="submit">Finish Booking</button> 
   </form>
 </div> <!-- End Container -->
