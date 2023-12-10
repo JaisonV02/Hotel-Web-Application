@@ -1,3 +1,10 @@
+/* Authors: Christopher Walsh & Jaison Vargis
+     Date started: 18/11/23
+     Date submitted: 10/12/23
+     This is the server backend for the RoyalHotels website
+     This contains the imports,server setup and REST functions of the website
+*/
+
 // Import modules
 const dotenv = require('dotenv');
 const express = require('express');
@@ -61,6 +68,8 @@ app.use(express.static(path.join(__dirname, '../CSS')));
 app.use(express.static(path.join(__dirname, '../Images')));
 app.use(express.static(path.join(__dirname, '../JS')));
 
+// Webpage Routes
+
 // Define the route for the home page
 app.get('/', async (req, res) => {
     // Retrieve all the locations available for home page bookings
@@ -87,9 +96,17 @@ app.get('/booking', async (req, res) => {
 
 app.get('/bookingaddons', async (req, res)=> {
     try {
-        const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where room_id = $1',[req.session.bookingForm.room_id]);
-        const rooms2 = rooms.rows;
-        res.render('bookingaddons', {req: req, rooms2: rooms2});
+        if (req.session.user) {
+            const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where room_id = $1',[req.session.bookingForm.room_id]);
+            const rooms2 = rooms.rows;
+            res.render('bookingaddons', {req: req, rooms2: rooms2});
+        } else {
+            // redirect to login
+            req.flash('error', 'Please login before booking');
+            res.redirect('/login');
+
+        }
+        
     } catch (err) {
         res.status(500).send('Server Error');
     }
@@ -153,7 +170,13 @@ app.get('/mybookings', async (req, res) => {
     try {
         const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where booked_by_email = $1 AND booked = true',[req.session.user.email]);
         const rooms2 = rooms.rows;
-        res.render('mybookings', {req: req, rooms2: rooms2});
+        if(rooms.rowCount > 0)
+        {
+            res.render('mybookings', {req: req, rooms2: rooms2});
+        } else{
+            req.flash('error', 'No bookings found');
+            res.redirect('/');
+        }
     } catch (err) {
         req.flash('error', 'No bookings found');
         res.redirect('/');
@@ -173,6 +196,8 @@ app.get('/mybookingsedit' , async (req,res) => {
         res.render('mybookingsedit', {req:req ,guestsrows: guestsrows,rooms2:rooms2 });
     
 })
+
+// Account functions
 
 // User registration, add data to the database
 app.post('/register', async (req, res) => {
@@ -339,6 +364,8 @@ app.post('/bookingForm', async(req,res) => {
     console.log(location,checkin_date,checkout_date,adults,children);
 });
 
+// Functions that allows users to choose what room they want to book
+// Passes on room information to the next step in the process
 app.post('/bookRoom', async(req,res) => {
     const {room_id} = req.body; 
     // Add room_id to bookingForm session
@@ -354,6 +381,7 @@ app.post('/bookRoom', async(req,res) => {
     console.log(req.session.bookingForm);
 });
 
+// Secure booking of a room
 app.post('/book', async(req,res) => {
     const {guest1,guest2,guest3,guest4,guest5,guest6,guest7,guest8} = req.body;
 
@@ -390,6 +418,7 @@ app.post('/mybookingsedit', async(req,res)=> {
     
 })
 
+// Delete user bookings
 app.post('/mybookingsdelete', async(req,res)=> {
     const {room_id} = req.body;
     try{
@@ -403,6 +432,7 @@ app.post('/mybookingsdelete', async(req,res)=> {
     }
     
 })
+
 
 // Admin functions
 // Add rooms
