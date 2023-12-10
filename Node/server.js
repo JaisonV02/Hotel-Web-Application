@@ -161,11 +161,12 @@ app.get('/mybookings', async (req, res) => {
 });
 
 app.get('/mybookingsedit' , async (req,res) => {
-    
         const {room_id} = req.body;
+        const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where booked_by_email = $1 AND booked = true',[req.session.user.email]);
+        const rooms2 = rooms.rows;
         const guests = await hotelDB.query('select * from guests where room_id = $1',[room_id]);
         const guestsrows = guests.rows;
-        res.render('mybookingsedit', {req:req ,guestsrows: guestsrows });
+        res.render('mybookingsedit', {req:req ,guestsrows: guestsrows,rooms2:rooms2 });
     
 })
 
