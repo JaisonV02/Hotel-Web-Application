@@ -1,3 +1,10 @@
+/* Authors: Christopher Walsh & Jaison Vargis
+     Date started: 18/11/23
+     Date submitted: 10/12/23
+     This is the server backend for the RoyalHotels website
+     This contains the imports,server setup and REST functions of the website
+*/
+
 // Import modules
 const dotenv = require('dotenv');
 const express = require('express');
