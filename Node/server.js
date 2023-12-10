@@ -68,6 +68,8 @@ app.use(express.static(path.join(__dirname, '../CSS')));
 app.use(express.static(path.join(__dirname, '../Images')));
 app.use(express.static(path.join(__dirname, '../JS')));
 
+// Webpage Routes
+
 // Define the route for the home page
 app.get('/', async (req, res) => {
     // Retrieve all the locations available for home page bookings
@@ -180,6 +182,8 @@ app.get('/mybookingsedit' , async (req,res) => {
         res.render('mybookingsedit', {req:req ,guestsrows: guestsrows,rooms2:rooms2 });
     
 })
+
+// Account functions
 
 // User registration, add data to the database
 app.post('/register', async (req, res) => {
@@ -346,6 +350,8 @@ app.post('/bookingForm', async(req,res) => {
     console.log(location,checkin_date,checkout_date,adults,children);
 });
 
+// Functions that allows users to choose what room they want to book
+// Passes on room information to the next step in the process
 app.post('/bookRoom', async(req,res) => {
     const {room_id} = req.body; 
     // Add room_id to bookingForm session
@@ -361,6 +367,7 @@ app.post('/bookRoom', async(req,res) => {
     console.log(req.session.bookingForm);
 });
 
+// Secure booking of a room
 app.post('/book', async(req,res) => {
     const {guest1,guest2,guest3,guest4,guest5,guest6,guest7,guest8} = req.body;
 
@@ -397,6 +404,7 @@ app.post('/mybookingsedit', async(req,res)=> {
     
 })
 
+// Delete user bookings
 app.post('/mybookingsdelete', async(req,res)=> {
     const {room_id} = req.body;
     try{
@@ -410,6 +418,7 @@ app.post('/mybookingsdelete', async(req,res)=> {
     }
     
 })
+
 
 // Admin functions
 // Add rooms
