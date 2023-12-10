@@ -108,7 +108,7 @@
 <div class="container" >
   <!-- For loop to make a new row for each room that matches search criteria -->
   <% rooms2.forEach(room => { %>
-  <form method="POST" action="/mybookingsedit">
+  <form method="POST" action="/mybookingsdelete">
   <div class="row align-items-start justify-content-center align-items-center bg-body-tertiary" style="max-height:125px; min-height:125px">
     
     <!-- 3 columns: Left=Room image,Middle=Name + Description, Right=Book Now + Price -->
@@ -158,7 +158,7 @@
       <!-- Button -->
       <div class="col-md-auto h-100" style="max-width:108px">
         
-        <button type="submit" class="btn btn-sm btn-outline-secondary" name="room_id" id="room_id" value="<%= room.room_id %>">Edit</button>
+        <button type="submit" class="btn btn-sm btn-danger" name="room_id" id="room_id" value="<%= room.room_id %>">Delete Booking</button>
         
       </div>
 

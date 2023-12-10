@@ -160,12 +160,16 @@ app.get('/mybookings', async (req, res) => {
     }
 });
 
+// Define the route for the my bookings page
+// Currently not working
+// Intent was to allow the user to edit the names of their guests
 app.get('/mybookingsedit' , async (req,res) => {
         const {room_id} = req.body;
         const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where booked_by_email = $1 AND booked = true',[req.session.user.email]);
         const rooms2 = rooms.rows;
         const guests = await hotelDB.query('select * from guests where room_id = $1',[room_id]);
         const guestsrows = guests.rows;
+        console.log(guestsrows);
         res.render('mybookingsedit', {req:req ,guestsrows: guestsrows,rooms2:rooms2 });
     
 })
@@ -375,12 +379,28 @@ app.post('/book', async(req,res) => {
     }
 });
 
+// Function currently not working
+// Intent was to allow for editing of guests in DB
 app.post('/mybookingsedit', async(req,res)=> {
+
+    const {room_id} = req.body;
+    const guests = await hotelDB.query('select * from guests where room_id = $1',[room_id]);
+    const guestsrows = guests.rows;
+    res.redirect('/mybookingsedit');
     
-        const {room_id} = req.body;
-        const guests = await hotelDB.query('select * from guests where room_id = $1',[room_id]);
-        const guestsrows = guests.rows;
-        res.redirect('/mybookingsedit');
+})
+
+app.post('/mybookingsdelete', async(req,res)=> {
+    const {room_id} = req.body;
+    try{
+        const result = await hotelDB.query('update room set check_in_date = null ,check_out_date = null ,booked = false ,booked_by_email = null where room_id = $1',[room_id]);
+        await hotelDB.query('delete from guests where room_id = $1',[room_id]);
+        req.flash('success', 'Removed booking');
+        res.redirect('/');
+    } catch (err) {
+        req.flash('error', 'Could not remove booking');
+        res.redirect('/');
+    }
     
 })
 
