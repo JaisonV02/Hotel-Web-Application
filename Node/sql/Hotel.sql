@@ -1,8 +1,3 @@
-select * from guest_account ga;
-select * from room_type rt;
-select * from room r ;
-select * from hotel h ;
-
 -- Drop Tables
 drop table room;
 drop table room_type;
