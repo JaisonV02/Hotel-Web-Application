@@ -161,8 +161,11 @@
       <!-- Name + Desc -->
       <div class="col h-100"style="max-height:125px" >
         <!-- Passing room id as a parameter in the form -->
-        <H3><%= room.city %>, <%= room.country %>, <%= room.rt_name %></H3>
-        <p class="card-text" style="text-overflow:ellipsis;overflow:hidden"><%= room.rt_desc %></p>
+        <H4><%= room.city %>, <%= room.country %>, <%= room.rt_name %></H4>
+        <p class="card-text" style="text-overflow:ellipsis;overflow:hidden">
+          Room No.: <%= room.room_no %>&emsp;&emsp;Booked: <%= room.booked %><br>
+          Check in: <%= room.check_in_date %>&emsp;&emsp;Check out: <%= room.check_out_date %><br>
+        </p>
       </div>
       
       <!-- Pricing -->
@@ -175,7 +178,7 @@
       <!-- Book -->
       <div class="col-md-auto h-100" style="max-width:108px">
         
-        <button type="submit" class="btn btn-sm btn-outline-danger" name="room_id" id="room_id" value="<%= room.room_id %>">Delete Room</button>
+        <button type="submit" class="btn btn-sm btn-outline-danger" name="room_id" id="room_id" value="<%= room.room_id %>">Delete</button>
         
       </div>
 
