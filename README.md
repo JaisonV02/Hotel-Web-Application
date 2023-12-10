@@ -95,5 +95,8 @@ The views folder contains all our web pages which are all .ejs files. Most of th
 [mybookings.ejs](/views/mybookings.ejs) is the page where the user can view all their bookings and edit them.
 ![My Bookings](/Images/Screenshots/Mybookings.png)
 
+[mybookingsedit.ejs](/views/mybookingsedit.ejs) is a page where the user can edit their bookings.
+![My Bookings Edit](/Images/Screenshots/Mybookingsedit.png)
+
 ### Gitignore
 Gitignore tells git to ignore the node modules because it is unecessary to push. The .env file is ignored because it contains sensitive information.
