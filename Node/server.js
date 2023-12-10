@@ -155,19 +155,18 @@ app.get('/mybookings', async (req, res) => {
         const rooms2 = rooms.rows;
         res.render('mybookings', {req: req, rooms2: rooms2});
     } catch (err) {
-        res.status(500).send('Server Error');
+        req.flash('error', 'No bookings found');
+        res.redirect('/');
     }
 });
 
 app.get('/mybookingsedit' , async (req,res) => {
-    try{
+    
         const {room_id} = req.body;
         const guests = await hotelDB.query('select * from guests where room_id = $1',[room_id]);
         const guestsrows = guests.rows;
-        res.render('mybookingsedit', {req:req ,guestrows: guestrows });
-    } catch (err) {
-        res.status(500).send('Server Error');
-    }
+        res.render('mybookingsedit', {req:req ,guestsrows: guestsrows });
+    
 })
 
 // User registration, add data to the database
@@ -355,9 +354,9 @@ app.post('/book', async(req,res) => {
 
     try{
         // Try to update the room table first then add guests
-        const result = hotelDB.query('update room set check_in_date = $1,check_out_date = $2,booked = true,booked_by_email = $3 where room_id = $4',[req.session.bookingForm.checkin_date,req.session.bookingForm.checkout_date,req.session.user.email,req.session.bookingForm.room_id]);
+        const result = await hotelDB.query('insert into guests (room_id,guest1,guest2,guest3,guest4,guest5,guest6,guest7,guest8) values($1,$2,$3,$4,$5,$6,$7,$8,$9)',[req.session.bookingForm.room_id,guest1,guest2,guest3,guest4,guest5,guest6,guest7,guest8]);
         if(result.rowCount > 0) {
-            await hotelDB.query('insert into guests (room_id,guest1,guest2,guest3,guest4,guest5,guest6,guest7,guest8) values($1,$2,$3,$4,$5,$6,$7,$8,$9)',[req.session.bookingForm.room_id,guest1,guest2,guest3,guest4,guest5,guest6,guest7,guest8]);
+            await hotelDB.query('update room set check_in_date = $1,check_out_date = $2,booked = true,booked_by_email = $3 where room_id = $4',[req.session.bookingForm.checkin_date,req.session.bookingForm.checkout_date,req.session.user.email,req.session.bookingForm.room_id]);
             req.flash('success', 'Room successfully booked');
             res.redirect('/');
         }
@@ -373,9 +372,16 @@ app.post('/book', async(req,res) => {
         req.flash('error', 'Room Could not be booked');
         res.redirect('/booking');
     }
-        
-    
 });
+
+app.post('/mybookingsedit', async(req,res)=> {
+    
+        const {room_id} = req.body;
+        const guests = await hotelDB.query('select * from guests where room_id = $1',[room_id]);
+        const guestsrows = guests.rows;
+        res.redirect('/mybookingsedit');
+    
+})
 
 // Admin functions
 // Add rooms

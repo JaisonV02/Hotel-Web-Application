@@ -161,13 +161,21 @@
   <form method="POST" action="/book">
     <div class="col-sm-5">
       <h1 class="h3 mb-3 fw-normal">Guest names:</h1>
-      <% for (var i =1;i< (parseInt(req.session.bookingForm.adults) + parseInt(req.session.bookingForm.children) + 1); i++) { %>
-      <div class="form-floating">
-          <input type="text" class="form-control" id="<%='guest'+i%>" name="<%='guest'+i%>" placeholder="<%='guest'+i %>">
-          <label for="floatingInput"><%='guest' + (i)%>:</label>
-      </div>
+      <% guestsrows.forEach(guest => { %>
+        <% for(i=1;i< parseInt(9);i++) { %>
+          
+          <% if( (guest.guest+i) == Null){ %>
+            <% i = parseInt(10); %>
+          <% } %>
+          <% else {
+            <div class="form-floating">
+              <input type="text" class="form-control" id="<%='guest'+i%>" name="<%='guest'+i%>" placeholder="<%='guest'+i %>">
+              <label for="floatingInput"><%='guest' + (i)%>:</label>
+          </div>
+          <% } %>
+        <% } %>
+     <%}); %>
     
-    <% } %>
     </div>
     <button class="btn btn-primary w-100 py-2" type="submit">Finish Booking</button> 
   </form>
