@@ -96,9 +96,17 @@ app.get('/booking', async (req, res) => {
 
 app.get('/bookingaddons', async (req, res)=> {
     try {
-        const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where room_id = $1',[req.session.bookingForm.room_id]);
-        const rooms2 = rooms.rows;
-        res.render('bookingaddons', {req: req, rooms2: rooms2});
+        if (req.session.user) {
+            const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where room_id = $1',[req.session.bookingForm.room_id]);
+            const rooms2 = rooms.rows;
+            res.render('bookingaddons', {req: req, rooms2: rooms2});
+        } else {
+            // redirect to login
+            req.flash('error', 'Please login before booking');
+            res.redirect('/login');
+
+        }
+        
     } catch (err) {
         res.status(500).send('Server Error');
     }
@@ -162,7 +170,13 @@ app.get('/mybookings', async (req, res) => {
     try {
         const rooms = await hotelDB.query('select * from room join room_type using(rt_id) where booked_by_email = $1 AND booked = true',[req.session.user.email]);
         const rooms2 = rooms.rows;
-        res.render('mybookings', {req: req, rooms2: rooms2});
+        if(rooms.rowCount > 0)
+        {
+            res.render('mybookings', {req: req, rooms2: rooms2});
+        } else{
+            req.flash('error', 'No bookings found');
+            res.redirect('/');
+        }
     } catch (err) {
         req.flash('error', 'No bookings found');
         res.redirect('/');
