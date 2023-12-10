@@ -334,7 +334,9 @@ app.post('/bookRoom', async(req,res) => {
 
 app.post('/book', async(req,res) => {
     const {guest1,guest2,guest3,guest4,guest5,guest6,guest7,guest8} = req.body;
+
     try{
+        // Try to update the room table first then add guests
         const result = hotelDB.query('update room set check_in_date = $1,check_out_date = $2,booked = true,booked_by_email = $3 where room_id = $4',[req.session.bookingForm.checkin_date,req.session.bookingForm.checkout_date,req.session.user.email,req.session.bookingForm.room_id]);
         if(result.rowCount > 0) {
             await hotelDB.query('insert into guests (room_id,guest1,guest2,guest3,guest4,guest5,guest6,guest7,guest8) values($1,$2,$3,$4,$5,$6,$7,$8,$9)',[req.session.bookingForm.room_id,guest1,guest2,guest3,guest4,guest5,guest6,guest7,guest8]);
@@ -345,6 +347,10 @@ app.post('/book', async(req,res) => {
             req.flash('error', 'Room Could not be booked');
             res.redirect('/booking');
         }
+        // If room cant be booked send user back to booking selection
+        // Should prevent errors in theory but room choice is already filtered by what is currently available
+        // Which makes this impossble to occur to my knowledge
+        // Leaving catch clause just incase a situation does arise
     }catch {
         req.flash('error', 'Room Could not be booked');
         res.redirect('/booking');
