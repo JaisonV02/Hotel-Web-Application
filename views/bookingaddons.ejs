@@ -105,7 +105,6 @@
   <!-- Recycling from booking.ejs, with new parameters it should always output 1 row -->
   <!-- Just acting as a reminder to the customer of what they are booking -->
   <% rooms2.forEach(room => { %>
-    <form method="POST" action="/bookRoom">
     <div class="row align-items-start justify-content-center align-items-center bg-body-tertiary" style="max-height:125px; min-height:125px">
       
       <!-- 3 columns: Left=Room image,Middle=Name + Description, Right=Book Now + Price -->
@@ -151,20 +150,30 @@
           <h4 class="text-body-secondary">€<%= room.price %>/night</h3>
           
         </div>
-  
-      
     </div>
-    </form>
-    <% }); %>
+  <% }); %>
     <!-- End Room Preview -->
 
-    <!-- Guest information form -->
-    <!-- For loop based on adults and children number gathered
-    This form will only intake first names of guests
-    Button at the end submitting all info and finally marking the room id as booked
-    by session.user.email -->
+  <!-- Guest information form -->
+  <!-- This form only takes in the names of each guest
+  but only displays the required forms based on the number of adults + children -->
+    
+  <form method="POST" action="/addGuests">
+    <div class="col-sm-5">
+      <h1 class="h3 mb-3 fw-normal">Guest names:</h1>
+      <% for (var i =0;i< (parseInt(req.session.bookingForm.adults) + parseInt(req.session.bookingForm.children)); i++) { %>
+      <div class="form-floating">
+          <input type="text" class="form-control" id="<%='guest'+i%>" name="<%='guest'+i%>" placeholder="<%='guest'+i %>">
+          <label for="floatingInput"><%='guest' + (i + 1)%>:</label>
+      </div>
+    
+    <% } %>
+    </div>
 
-</div>
+    <button class="btn btn-primary w-100 py-2" type="submit">Finish Booking</button> 
+  </form>
+</div> <!-- End Container -->
+
 
 <!-- Footer -->
 <div class="mt-5 p-4 bg-primary text-white text-center">
