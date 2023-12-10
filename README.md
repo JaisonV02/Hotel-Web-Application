@@ -6,6 +6,24 @@ This Hotel Web Application for a hotels we named Royal Hotels implements Bootstr
 
 ![Home Page](/Images/Screenshots/Homepage.png)
 
+## Configuration and Deployment
+To deploy this project using Node, first we must setup the database. Using the SQL file [Hotel.sql](/Node/sql/Hotel.sql) to create a database for this website, we should be able to start deploying the database. This web application uses Postgres databases.
+
+Once we have setup the database, next we must create a .env file and place it inside the /Node folder.
+
+Inside the .env file we should include the following data:
+
+- DB_HOST=XXX
+- DB_USER=XXX
+- DB_PASSWORD=XXX
+- DB_PORT=5432
+- DB_DATABASE=postgres
+- SESSION_SECRET=XXX
+
+The ones that begin with DB is info for the database. Session secret is for the user session using express-session.
+
+Once the setup is complete, we should be able to start the server. To start the server, cd into the /Node directory and run the following command: `Node server.js`. This will run the code inside the server.js file and the server will start running on port 8080.
+
 ## Project Structure
 
 ### CSS
