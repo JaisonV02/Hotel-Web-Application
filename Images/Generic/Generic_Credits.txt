@@ -6,3 +6,5 @@ Pool1.png	- Westport Plaza Hotel
 
 Bar1.png	- The Merchant Hotel
 Bar2.png	- The Empire Hotel New York
+
+Krusty_Towers.png	- Spongebob Squarepants TV show
