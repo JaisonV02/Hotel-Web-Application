@@ -274,19 +274,24 @@ app.post('/update', async (req, res) => {
 // Delete Account
 app.post('/delete', async (req, res) => {
     // Delete account from database
-    const result = await hotelDB.query('delete from guest_account where email = $1', [req.session.user.email]);
-
-    if (result.rowCount > 0) {
-        // Destroy the session
-        req.session.destroy((err) => {
-           if (err) {
-                return console.log(err);
-           }
-
-           res.redirect('/');
-        });
-    } else {
-        res.redirect('/');
+    try {
+        const result = await hotelDB.query('delete from guest_account where email = $1', [req.session.user.email]);
+    
+        if (result.rowCount > 0) {
+            // Destroy the session
+            req.session.destroy((err) => {
+               if (err) {
+                    return console.log(err);
+               }
+    
+               res.redirect('/');
+            });
+        } else {
+            res.redirect('/');
+        }
+    } catch (err) {
+        req.flash('error', 'Could not delete account, try again later');
+        res.redirect('/accounts');
     }
 });
 
@@ -322,6 +327,26 @@ app.post('/bookRoom', async(req,res) => {
     res.redirect('/bookingaddons');
     console.log(req.session.bookingForm);
 
+});
+
+// Admin functions
+// Delete rooms
+app.post('/admin/delete/room', async(req, res) => {
+    try {
+        const {room_id} = req.body;
+        const result = await hotelDB.query('delete from room where room_id = $1', [room_id]);
+    
+        if (result.rowCount > 0) {
+            req.flash('warning', 'Room successfully deleted');
+            res.redirect('/admin');
+        } else {
+            req.flash('error', 'Could not delete room');
+            res.redirect('/admin');
+        }
+    } catch (err) {
+        req.flash('error', 'Could not delete room');
+        res.redirect('/admin');
+    }
 });
 
 // Start the server
